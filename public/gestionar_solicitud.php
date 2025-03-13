@@ -57,7 +57,7 @@ $ListadoSolicitudes = $ListadoSolicitudesUsuarioModel->ObtenerListadoSolicitudes
                         <table id="TablaSolicitudes" class="display">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
+                                    <th>ID solicitud</th>
                                     <th>Título</th>
                                     <th>Prioridad</th>
                                     <th>Tipo Solicitud</th>
