@@ -24,16 +24,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $tipo_solicitud = $_POST['selectTipoSolicitud'];
     //$tipo_solicitud = '0';
     $descripcion = trim($_POST['descripcion']);
-    //$colaborador= $_POST['SelectFuncionario'];
-    $colaborador= '0';
+    $colaborador= $_POST['SelectFuncionario'];
+    //$colaborador= '0';
     $comentarioColaborador= $_POST['txtComentarioColaborador'];
     
-  
+     
     
 
     if (!empty($titulo) && !empty($fecha_solicitud) && !empty($descripcion)) {
-   
-
+       
         $solicitudModel = new Solicitud($conn);
         if ($solicitudModel->crearSolicitud($usuario_id, $titulo, $fecha_solicitud, $solicitante, $prioridad, $tipo_solicitud, $descripcion, $colaborador, $comentarioColaborador)) {
             header("Location: /sitio/public/resultado.php?result=OK&msg=OK");

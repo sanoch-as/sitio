@@ -74,7 +74,7 @@ $ListadoSolicitudes = $ListadoSolicitudesUsuarioModel->ObtenerListadoSolicitudes
                                         <td><?= $solicitud['tipo_solicitud'] ?></td>
                                         <td><?= $solicitud['estado'] ?></td>
                                         <td>
-                                            <a href="editar.php?id=<?= $solicitud['id'] ?>">Editar</a> |
+                                            <a href="trabajo_solicitud.php?id=<?= $solicitud['id'] ?>">Editar</a> |
                                             
                                         </td>
                                     </tr>
