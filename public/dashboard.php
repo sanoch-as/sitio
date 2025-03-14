@@ -34,8 +34,11 @@ $menus = $result->fetch_all(MYSQLI_ASSOC);
     <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 
-    <link href="./assets/css/main.css" rel="stylesheet">
-    <link href="./assets/css/sanoch.css" rel="stylesheet">
+    
+    <link href="./assets/css/main.css" rel="stylesheet"> 
+    <link href="./assets/css/sanoch.css" rel="stylesheet"> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
 </head>
 
 <body>
@@ -102,7 +105,7 @@ $menus = $result->fetch_all(MYSQLI_ASSOC);
                     <span>
                         <button type="button" class="btn-icon btn-icon-only btn btn-primary btn-sm mobile-toggle-header-nav">
                             <span class="btn-icon-wrapper">
-                                <i class="fa fa-ellipsis-v fa-w-6"></i>
+                                <i class=" fa fa-ellipsis-v fa-w-6"></i>
                             </span>
                         </button>
                     </span>
@@ -116,7 +119,7 @@ $menus = $result->fetch_all(MYSQLI_ASSOC);
                             <?php foreach ($menus as $menu) : ?>
                                 <li>
                                     <a href="<?= $menu['url'] ?>" class="<?= ($current_page == basename($menu['url'])) ? 'active' : '' ?>">
-                                        <i class="metismenu-icon <?= $menu['icono'] ?>"></i> <?= $menu['nombre'] ?>
+                                        <i class="<?= $menu['icono'] ?>" style="font-size:23px;"  aria-hidden="true" ></i> <?= $menu['nombre'] ?>
                                     </a>
                                 </li>
                             <?php endforeach; ?>
@@ -143,12 +146,7 @@ $menus = $result->fetch_all(MYSQLI_ASSOC);
 
                         </div>
                     </div>
-
-                    <div id="iframe">
-
-
-                    </div>
-
+                    <div id="iframe" class="responsive-iframe"><iframe src="graph.php" style="width: 100%; height: 100%; border: none;"></iframe></div>
                 </div>
             </div>
 
@@ -161,9 +159,6 @@ $menus = $result->fetch_all(MYSQLI_ASSOC);
         </div>
     </div>
 
-
-
-    
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
@@ -186,6 +181,7 @@ $menus = $result->fetch_all(MYSQLI_ASSOC);
         });
     </script>
     <script type="text/javascript" src="./assets/scripts/main.js"></script>
+    
 </body>
 
 </html>
