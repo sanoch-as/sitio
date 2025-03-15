@@ -57,5 +57,14 @@ class Solicitud
         return $DetalleSolicitud;
     }
 
+    Public function DerivarSolicitud($idSolicitud, $usuario_idActual, $prioridad, $IdUsuarioDerivar, $comentarioUsuarioDerivar)
+    {
+        $query = "CALL DerivarSolicitud($idSolicitud, $usuario_idActual, '$prioridad', $IdUsuarioDerivar, '$comentarioUsuarioDerivar')";
+        /* echo $query;
+        exit(); */
+        $stmt = $this->conn->prepare($query);
+        return $stmt->execute();
+    }
+
 
 }

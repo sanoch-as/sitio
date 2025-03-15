@@ -152,9 +152,9 @@ $menus = $result->fetch_all(MYSQLI_ASSOC);
 
         </div>
     </div>
-    <div class="app-wrapper-footer">
+    <div class="app-wrapper-footer" style="padding-top: 20px;">
         <div class="app-footer">
-            <div class="app-footer__inner"> Derechos Reservados - <a href="http://www.google.com"> Alexis Sánchez O.</a>
+            <div class="app-footer__inner" style="padding-top: 20px;"> Derechos Reservados - <a href="http://www.google.com"> Alexis Sánchez O.</a>
             </div>
         </div>
     </div>
