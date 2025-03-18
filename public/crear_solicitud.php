@@ -4,6 +4,7 @@ session_start();
 require_once __DIR__ . '/../config/database.php'; // Conexión a la BD
 require_once __DIR__ . '/../app/models/TipoSolicitud.php'; // Modelo de TipoSolicitud
 require_once __DIR__ . '/../app/models/Usuario.php'; // Modelo de Usuarios
+require_once __DIR__ . '/../config/session.php'; 
 
 // Verificar autenticación
 if (!isset($_SESSION['usuario']) && basename($_SERVER['PHP_SELF']) != 'index.php') {

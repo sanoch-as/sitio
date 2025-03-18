@@ -5,6 +5,7 @@ require_once __DIR__ . '/../config/database.php'; // Conexión a la BD
 require_once __DIR__ . '/../app/models/TipoSolicitud.php'; // Modelo de TipoSolicitud
 require_once __DIR__ . '/../app/models/Solicitud.php'; // Modelo de Solicitud
 require_once __DIR__ . '/../app/models/Usuario.php'; // Modelo de Usuarios
+require_once __DIR__ . '/../config/session.php'; 
 
 // Verificar autenticación
 if (!isset($_SESSION['usuario']) && basename($_SERVER['PHP_SELF']) != 'index.php') {
@@ -309,7 +310,7 @@ if ($_GET['id']) {
             <button type="reset" class="btn btn-sm btn-default" id="btnCancelar">Cancelar</button>
         </div>
     </div>
-    txtComentarioColaborador
+    
     <script>
         document.getElementById("btnEnviarDerivar").addEventListener("click", function() {
             document.getElementById("FormSolicitud").submit();

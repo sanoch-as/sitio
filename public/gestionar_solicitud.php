@@ -5,6 +5,8 @@ require_once __DIR__ . '/../config/database.php'; // Conexión a la BD
 require_once __DIR__ . '/../app/models/TipoSolicitud.php'; // Modelo de TipoSolicitud
 require_once __DIR__ . '/../app/models/Usuario.php'; // Modelo de Usuarios
 require_once __DIR__ . '/../app/models/Solicitud.php'; // Modelo de Usuarios
+require_once __DIR__ . '/../config/session.php'; 
+
 
 // Verificar autenticación
 if (!isset($_SESSION['usuario']) && basename($_SERVER['PHP_SELF']) != 'index.php') {
@@ -17,7 +19,10 @@ if (!isset($_SESSION['usuario']) && basename($_SERVER['PHP_SELF']) != 'index.php
 $ListadoSolicitudesUsuarioModel = new Solicitud($conn);
 $ListadoSolicitudes = $ListadoSolicitudesUsuarioModel->ObtenerListadoSolicitudesUsuarios($_SESSION['usuario_id']);
 
-
+/* echo "<pre>";
+print_r($ListadoSolicitudes);
+echo "</pre>";
+exit(); */
 ?>
 
 

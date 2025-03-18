@@ -1,3 +1,6 @@
+<?php
+require_once __DIR__ . '/../config/session.php'; 
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -39,10 +42,6 @@
                             if($_GET['result']=='0'){
                                 echo "<div class='alert alert-danger'>Error al realizar la acción.<br>result=".$_GET['result']."<br>Mensaje:".$_GET['msg']."</div>";
                             }
-                            else{
-                                echo "<div class='alert alert-danger'>Error al realizar la acción.<br>result=".$_GET['result']."<br>Mensaje:".$_GET['msg']."</div>";
-                            }
-                            
                         }
                         else{
                             echo "<div class='alert alert-danger'>Error al realizar la acción, No se recibe result .<br></div>";

@@ -10,7 +10,7 @@ class Usuario
 
     public function obtenerUsuarioPorCredenciales($usuario, $password)
     {
-        $query = "SELECT id, usuario FROM usuarios WHERE usuario = ? AND password = MD5(?)";
+        $query = "SELECT id, usuario, nombre_completo, rol FROM usuarios WHERE usuario = ? AND password = MD5(?)";
         $stmt = $this->conn->prepare($query);
         $stmt->bind_param('ss', $usuario, $password);
         $stmt->execute();

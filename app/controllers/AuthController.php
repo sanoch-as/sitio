@@ -14,6 +14,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($user) {
         $_SESSION['usuario'] = $user['usuario'];
         $_SESSION['usuario_id'] = $user['id']; // Guardar el ID del usuario
+        $_SESSION['nombre_completo'] = $user['nombre_completo'];
+        $_SESSION['rol'] = $user['rol'];
         header('Location: /sitio/public/dashboard.php');
         exit();
     } else {
