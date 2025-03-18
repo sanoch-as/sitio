@@ -7,18 +7,25 @@ if (!isset($_SESSION['usuario'])) {
 
 require_once __DIR__ . '/../config/database.php'; // Conexión a la BD
 require_once __DIR__ . '/../config/session.php';
-//require_once __DIR__ . '/../app/models/cargar_menu.php';
-echo (require_once __DIR__ . '/../app/models/cargar_menu.php');
-exit();
+
+
+
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+
+$menu_path = __DIR__ . '/cargar_menu.php';
+if (file_exists($menu_path)) {
+    require_once $menu_path;
+} else {
+    die("Error: No se encuentra el archivo cargar_menu.php en " . realpath(__DIR__ . '/../models/'));
+}
 
 $current_page = basename($_SERVER['PHP_SELF']);
 
-// Obtener menús desde la BD
-$query = "SELECT nombre, icono, url FROM menu ORDER BY orden";
-$result = $conn->query($query);
-$menus = $result->fetch_all(MYSQLI_ASSOC);
 ?>
-app/models/cargar_menu.php
+
 
 
 <!doctype html>
@@ -102,7 +109,7 @@ app/models/cargar_menu.php
                                         <?php echo $_SESSION['nombre_completo'] ?>
                                     </div>
                                     <div class="widget-subheading">
-                                        VP People Manager
+                                        <?php echo $_SESSION['rol'] ?>
                                     </div>
                                 </div>
                             </div>
@@ -151,18 +158,37 @@ app/models/cargar_menu.php
                     <div class="app-sidebar__inner">
                         <ul class="vertical-nav-menu" id="menu-container">
                             <li class="app-sidebar__heading">Solicitudes</li>
+                            <?php
+                            foreach ($menuTree as $menu) {
+                                echo '<li>';
+                                //echo '<a href="javascript:void(0);" onclick="return false;"><i class="' . $menu['icono'] . '"></i> ' . $menu['nombre'];
+                                echo '<a href="' . $menu['url'] . '"><i class="' . $menu['icono'] . '"></i> ' . $menu['nombre'];
 
-                            </li>
+                                // Si tiene submenús, agregar icono de desplegable
+                                if (!empty($menu['submenus'])) {
+                                    echo ' <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>';
+                                }
+
+                                echo '</a>';
+
+                                // Imprimir los submenús si existen
+                                if (!empty($menu['submenus'])) {
+                                    echo '<ul>';
+                                    foreach ($menu['submenus'] as $submenu) {
+                                        echo '<li><a href="' . $submenu['url'] . '"><i class="' . $submenu['icono'] . '"></i> ' . $submenu['nombre'] . '</a></li>';
+                                    }
+                                    echo '</ul>';
+                                }
+
+                                echo '</li>';
+                            }
+                            ?>
                         </ul>
-
-
-
-
                     </div>
                 </div>
             </div>
             <div class="app-main__outer"> <!-- Ventana Trabajo-->
-                <div class="app-main__inner">
+                <div class="app-main__inner" style="padding-bottom:20px">
                     <div class="app-page-title">
                         <div class="page-title-wrapper">
                             <div class="page-title-heading">
@@ -178,16 +204,14 @@ app/models/cargar_menu.php
 
                         </div>
                     </div>
-                    <div id="iframe" class="responsive-iframe"><iframe src="graph.php" style="width: 100%; height: 100%; border: none;"></iframe></div>
+                    <div id="iframe" class="responsive-iframe" style="padding-bottom:20px"><iframe src="graph.php" style="width: 100%; height: 100%; border: none;"></iframe></div>
                 </div>
             </div>
 
         </div>
     </div>
-    <div class="app-wrapper-footer" style="padding-top: 20px;">
-        <div class="app-footer">
-            <div class="app-footer__inner" style="padding-top: 20px;"> Derechos Reservados - <a href="http://www.google.com"> Alexis Sánchez O.</a>
-            </div>
+    <div class="app-wrapper-footer" >
+        <div class="app-footer">            
         </div>
     </div>
 
@@ -197,14 +221,25 @@ app/models/cargar_menu.php
             // Cargar páginas en el iframe
             document.querySelectorAll(".vertical-nav-menu a").forEach(function(link) {
                 link.addEventListener("click", function(event) {
-                    event.preventDefault();
                     let url = this.getAttribute("href");
+
+                    // Evitar que los menús sin URL carguen en el iframe
+                    if (!url || url === "#" || url === "javascript:void(0);") {
+                        return;
+                    }
+
+                    event.preventDefault(); // Prevenir la navegación normal
+
                     let iframeContainer = document.getElementById("iframe");
 
                     // Limpiar el contenedor y crear un nuevo iframe
                     iframeContainer.innerHTML = '';
                     let iframe = document.createElement("iframe");
                     iframe.src = url;
+                    iframe.style.width = "100%";
+                    iframe.style.height = "100%";
+                    iframe.style.border = "none";
+                    iframe.style.paddingBottom = "20px";
                     iframe.classList.add("responsive-iframe");
                     iframeContainer.appendChild(iframe);
                 });
@@ -245,65 +280,6 @@ app/models/cargar_menu.php
             // Iniciar temporizador cuando la página se carga
             reiniciarTemporizador();
         });
-
-        // Menú desplegable
-
-        /* document.addEventListener("DOMContentLoaded", function() {
-            fetch("cargar_menu.php")
-                .then(response => response.json())
-                .then(menus => {
-                    let menuContainer = document.getElementById("menu-container");
-                    let menuHTML = "";
-
-                    let menuPadres = menus.filter(menu => menu.parent_id === null);
-                    let menuHijos = menus.filter(menu => menu.parent_id !== null);
-
-                    menuPadres.forEach(menu => {
-                        let hijos = menuHijos.filter(hijo => hijo.parent_id === menu.id);
-
-                        if (hijos.length > 0) {
-                            menuHTML += `
-                        <li>
-                            <a href="#" class="menu-toggle">
-                                <i class="${menu.icono}" style="font-size:23px;" aria-hidden="true"></i> ${menu.nombre}
-                                <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
-                            </a>
-                            <ul class="submenu">
-                    `;
-                            hijos.forEach(hijo => {
-                                menuHTML += `
-                            <li>
-                                <a href="${hijo.url}">
-                                    <i class="${hijo.icono}" style="font-size:18px;" aria-hidden="true"></i> ${hijo.nombre}
-                                </a>
-                            </li>
-                        `;
-                            });
-
-                            menuHTML += `</ul></li>`;
-                        } else {
-                            menuHTML += `
-                        <li>
-                            <a href="${menu.url}">
-                                <i class="${menu.icono}" style="font-size:23px;" aria-hidden="true"></i> ${menu.nombre}
-                            </a>
-                        </li>
-                    `;
-                        }
-                    });
-
-                    menuContainer.innerHTML = menuHTML;
-
-                    // Agregar funcionalidad para desplegar los submenús
-                    document.querySelectorAll(".menu-toggle").forEach(toggle => {
-                        toggle.addEventListener("click", function(event) {
-                            event.preventDefault();
-                            this.nextElementSibling.classList.toggle("show-submenu");
-                        });
-                    });
-                })
-                .catch(error => console.error("Error al cargar los menús:", error));
-        }); */
     </script>
 
 
