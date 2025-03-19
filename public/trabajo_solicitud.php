@@ -229,8 +229,6 @@ if ($_GET['id']) {
                             </div>
                         </div>
                     </div>
-
-
                 </form>
             </div>
             <div id="Notas" class="tab-pane fade">
