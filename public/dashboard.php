@@ -196,7 +196,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
                                     <i class="metismenu-icon pe-7s-note2">
                                     </i>
                                 </div>
-                                <div>Consultar votante en Padrón Electoral ALEXIS SANCHEZ OCHOA
+                                <div>Titulo del sitio
                                     <div class="page-title-subheading">Consultar si votante está registrado en el padrón electoral.
                                     </div>
                                 </div>
