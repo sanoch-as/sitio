@@ -48,6 +48,10 @@ if ($id) {
     //Obtener Notas
     $notasSolicitudModel = new Solicitud($conn);
     $notas = $notasSolicitudModel->ObtenerNotasSolicitud($id);
+
+    //Obtener Seguimiento
+    $SeguimientosSolicitudModel = new Solicitud($conn);
+    $Seguimientos = $SeguimientosSolicitudModel->ObtenerSeguimiento($id);
 } else {
     header("Location: /sitio/public/resultado.php?result=Obtener Registro&msg='Error al obtener detalle de solicitud'");
     exit();
@@ -62,7 +66,7 @@ if ($id) {
 
 <head>
     <meta charset="UTF-8">
-    <title>Crear Solicitud</title>
+    <title>Consultar Solicitud</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
@@ -99,7 +103,7 @@ if ($id) {
             <li class="active"><a data-toggle="tab" href="#Solicitud">Solicitud
                 </a></li>
             <li><a data-toggle="tab" href="#Notas">Comentarios</a></li>
-            <!-- <li><a data-toggle="tab" href="#Seguimiento">Seguimiento</a></li> -->
+            <li><a data-toggle="tab" href="#Seguimiento">Seguimiento</a></li> 
         </ul>
 
         <div class="tab-content">
@@ -137,12 +141,7 @@ if ($id) {
                                             </div>
                                             <div class="col-md-4 mb-3">
                                                 <label for="Prioridad">prioridad</label>
-                                                <select id="SelectPrioridad" class="form-control-sm form-control select2" name="SelectPrioridad" style="width:100%">
-                                                    <option value="" disabled>Seleccione una opción</option>
-                                                    <option value="Baja" <?php if ($detalleSolicitud[0]['prioridad'] == 'Baja') echo 'selected'; ?>>Baja</option>
-                                                    <option value="Media" <?php if ($detalleSolicitud[0]['prioridad'] == 'Media') echo 'selected'; ?>>Media</option>
-                                                    <option value="Alta" <?php if ($detalleSolicitud[0]['prioridad'] == 'Alta') echo 'selected'; ?>>Alta</option>
-                                                </select>
+                                                <input type="text" class="form-control-sm form-control" name="SelectPrioridad" id="SelectPrioridad" value="<?php echo $detalleSolicitud[0]['prioridad']; ?>" readonly>
                                             </div>
                                             <div class="col-md-4 mb-3">
                                                 <label for="selectTipoSolicitud">Tipo Solicitud</label>
@@ -185,50 +184,6 @@ if ($id) {
                                 </div>
                             </div> <!-- card-body -->
                         </div> <!-- main-card mb-3 card -->
-                    </div>
-                    <!--######### Modal Derivación-->
-
-                    <div class="modal fade" id="ModalDistribucion" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-body" style="padding-bottom:10px">
-                                    <div class="panel panel-default">
-                                        <div class="panel-heading">
-                                            <h3 class="panel-title">Agregar Distribución</h3>
-                                        </div>
-                                        <div class="panel-body">
-                                            <form style="padding: 10px 10px 10px 10px">
-                                                <div class="form-group">
-                                                    <div class="form-row align-items-center">
-                                                        <div class="col-md-12 mb-12"> <label for="SelectFuncionarioModal">Funcionario</label>
-                                                            <select id="SelectFuncionarioModal" class="form-control-sm form-control select2" name="SelectFuncionarioModal" style="width:100%">
-                                                                <option value="" disabled selected>Seleccione un usuario</option>
-                                                                <?php foreach ($ListadoUsuarios as $usuario) : ?>
-                                                                    <option value="<?= $usuario['id'] ?>"><?= $usuario['nombre_completo'] ?></option>
-                                                                <?php endforeach; ?>
-                                                            </select>
-                                                        </div>
-                                                         
-                                                                <div class="col-md-12 mb-6"> <label for="txtDistribucionModal">Comentario</label>
-                                                                    <textarea id="txtDistribucionModal" class="form-control-sm form-control" name="txtDistribucionModal" rows="4" style="width:100%"></textarea>
-                                                                    <small class="form-text text-muted">Ingese comentario u observación</small>
-                                                                </div>
-                                                            
-                                                        
-                                                        <input type="input" name="idderivacion" id="idderivacion" value="" hidden>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Cancelar</button>
-                                    <button type="button" class="btn btn-sm btn-success" id="btnEnviarDerivar" name="btnEnviarDerivar">Derivar</button>
-                                </div>
-                            </div>
-                        </div>
-
                     </div>
                 </form>
             </div>
@@ -289,18 +244,33 @@ if ($id) {
                         <div class="panel-body">
                             <form style="padding: 10px 10px 10px 10px">
                                 <div style="padding-top: 15px;"></div>
-                                <table class="table table-striped display" id="tablaDocumentos" name="tablaDocumentos"
+                                <table class="table table-striped display" id="tablaSeguimiento" name="tablaSeguimiento"
                                     style="width:100%">
                                     <thead>
                                         <tr>
-                                            <th style="width:35%">Clasificación</th>
-                                            <th style="width:35%">Nombre Archivo</th>
-                                            <th style="width:10%">Fecha</th>
-                                            <th style="width:10%">Usuario</th>
-                                            <th style="width:10%">Acción</th>
+                                            <th style="width:20%">Actividad</th>
+                                            <th style="width:20%">Fecha Derivación</th>
+                                            <th style="width:20%">Fecha Apertura</th>
+                                            <th style="width:20%">Fecha Término Trabajo</th>
+                                            <th style="width:20%">Usuario Derivado</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="BodyDocumentos"> </tbody>
+                                    <tbody id="BodySeguimiento">
+                                        <?php if (!empty($Seguimientos)) {
+                                            foreach ($Seguimientos as $Seguimiento) {
+                                                echo '<tr>
+                                                <td>' . $Seguimiento['Actividad'] . '</td>
+                                                <td>' . $Seguimiento['FechaDerivacionTarea'] . '</td>
+                                                <td>' . $Seguimiento['FechaInicioTrabajo'] . '</td>
+                                                <td>' . $Seguimiento['FechaFinTrabajo'] . '</td>
+                                                <td>' . $Seguimiento['UsuarioDerivado'] . '</td>
+                                                </tr>';
+                                            }
+                                        } else {
+                                            echo '<tr><td colspan="3">No hay seguimiento</td></tr>';
+                                        }
+                                        ?>
+                                    </tbody>
                                 </table>
                             </form>
                         </div>
@@ -308,12 +278,6 @@ if ($id) {
                 </div>
             </div>
         </div>
-        <div class="form-row" style="float:right">
-            <button type="button" class="btn btn-sm btn-success" id="btnModalDistribucion" data-toggle="modal" data-target="#ModalDistribucion">Derivar Solicitid</button> &nbsp;
-            <button type="button" class="btn btn-sm btn-danger" id="btnFinalizar" >Finalizar Solicitud</button> &nbsp;
-            <button type="reset" class="btn btn-sm btn-default" id="btnCancelar" >Cancelar</button>&nbsp;
-        </div>
-
     </div>
 
     <script>
@@ -333,8 +297,7 @@ if ($id) {
                 ],
                 "info": true, // Mostrar información de registros
                 "lengthMenu": [10, 25, 50, 100], // Opciones de registros por página
-                "data": [], // Evita el error cuando no hay registros
-                "columns": [{ 
+                "columns": [{
                         title: "ID",
                         data: "id"
                     },

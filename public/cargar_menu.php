@@ -14,12 +14,15 @@ $stmtPerfil->execute();
 $resultPerfil = $stmtPerfil->get_result();
 $perfilId = $resultPerfil->fetch_assoc()['id'];
 
+$sqlMenu="";
+$stmtMenu="";
+$resultMenu="";
 
 $sqlMenu="select m.* from menu m, menu_perfil mp
 WHERE mp.perfil_id=$perfilId 
 AND mp.menu_id = m.id                 
-AND m.parent_id is null  
-order by m.orden asc";
+AND m.parent_id ='0'
+order by m.orden asc"; 
 
 
 
@@ -32,6 +35,10 @@ while ($row = $resultMenu->fetch_assoc()) {
     $menus[] = $row;
 }
 
+
+$sqlSubMenu="";
+$stmtSubMenu="";
+$resultSubMenu="";
 
 $sqlSubMenu="select m.* from menu m, menu_perfil mp
 WHERE mp.perfil_id=$perfilId 
@@ -48,9 +55,11 @@ while ($row = $resultSubMenu->fetch_assoc()) {
     $submenus[] = $row;
 }
 
-/* echo "<pre>"; print_r($menus); echo "</pre>"; echo "<br>";
+/* echo ("el ID del Perfil: ".$perfilId);
+echo "<br>";
+echo "<pre>"; print_r($menus); echo "</pre>"; echo "<br>";
 echo "<pre>"; print_r($submenus); echo "</pre>";
-exit();  */
+exit();   */
 
 
 // Estructurar submenús por parent_id

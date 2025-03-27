@@ -24,9 +24,8 @@ require_once __DIR__ . '/../config/session.php';
 </head>
 
 <body>
-    <div class="container">      
-        <div class="row">
-            
+    <div class="container" style="margin-top: 20px;">      
+        <div class="row">            
             <div class="col-md-12">
                 <div class="panel panel-primary">                    
                     <div class="panel-body">
@@ -34,13 +33,13 @@ require_once __DIR__ . '/../config/session.php';
                         
                         if ($_GET['result']) {
                             if($_GET['result']=='OK'){
-                                echo "<div class='alert alert-success'>Acción completada correctamente.</div>";
+                                echo "<div class='alert alert-success'><strong>Acción completada correctamente.</strong></br>".$_GET['msg']. "</div>";
                             }
                             if($_GET['result']=='NOK'){
-                                echo "<div class='alert alert-danger'>Error al realizar la acción.<br>".$_GET['result']."</div>";
+                                echo "<div class='alert alert-danger'>Error al realizar la acción.<br>".$_GET['result']."</br>Mensaje: ".$_GET['msg']."</div>";
                             }
                             if($_GET['result']=='0'){
-                                echo "<div class='alert alert-danger'>Error al realizar la acción.<br>result=".$_GET['result']."<br>Mensaje:".$_GET['msg']."</div>";
+                                echo "<div class='alert alert-danger'>Error al realizar la acción.<br>result=".$_GET['result']."<br>Mensaje: ".$_GET['msg']."</div>";
                             }
                         }
                         else{

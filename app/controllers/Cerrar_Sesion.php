@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 // Si la petición es una redirección (cuando expira la sesión)
-header("Location: ../../login.php");
+header("Location: ../../public/login.php");
 exit;
 
 

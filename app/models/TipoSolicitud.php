@@ -7,14 +7,31 @@ class TipoSolicitud {
     }
 
     public function obtenerTipos() {
-        $query = "SELECT idTipoSolicitud, GlosaTipoSolicitud FROM tiposolicitud WHERE Estado='1'";
-        $result = $this->conn->query($query);
-
-        $tipos = [];
-        while ($row = $result->fetch_assoc()) {
-            $tipos[] = $row;
+        while ($this->conn->more_results()) {
+            $this->conn->next_result();
         }
-        return $tipos;
+        $sql = "SELECT idTipoSolicitud, GlosaTipoSolicitud FROM tiposolicitud";
+        $stmt = $this->conn->prepare($sql);
+        
+        if ($stmt) {
+            $stmt->execute();
+            $result = $stmt->get_result();
+            
+            $tipos = [];
+            while ($row = $result->fetch_assoc()) {
+                $tipos[] = $row;
+            }
+
+            // Liberar el resultado antes de hacer otra consulta
+            $result->free();
+            $stmt->close();
+            
+            return $tipos;
+        } else {
+            throw new Exception("Error al preparar la consulta");
+        }
     }
+
+
 }
 ?>

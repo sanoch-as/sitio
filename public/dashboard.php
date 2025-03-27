@@ -166,7 +166,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
 
                                 // Si tiene submenús, agregar icono de desplegable
                                 if (!empty($menu['submenus'])) {
-                                    echo ' <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>';
+                                    echo ' <i class="metismenu-state-icon fa fa-angle-down caret-left"></i>';
                                 }
 
                                 echo '</a>';

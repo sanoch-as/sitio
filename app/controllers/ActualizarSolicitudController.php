@@ -10,18 +10,20 @@ if (!isset($_SESSION['usuario']) && basename($_SERVER['PHP_SELF']) != 'index.php
     exit();
 }
 
-
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
 //#### Recibir campos por POST
 
 // Verificar si la solicitud es por POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    /* echo "<pre>";
+    /*   echo "<pre>";
     print_r($_POST);
     echo "</pre>"; 
-    exit(); */
-    
+    exit(); 
+      */
     $usuario_idActual = $_SESSION['usuario_id'];
     $idSolicitud=$_POST['numSolicitud'];
     $titulo = trim($_POST['titulo']);
@@ -31,17 +33,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $tipo_solicitud = $_POST['selectTipoSolicitud'];
     $descripcion = trim($_POST['descripcion']);
     $comentarioColaborador= $_POST['txtComentarioColaborador'];
+    $idderivacion= $_POST['idderivacion'];
+
+    if($idderivacion==2){
+        $IdUsuarioDerivar=6;
+        $comentarioUsuarioDerivar='[Solicitud Finalizada]';
+
+    }else{
     $IdUsuarioDerivar= $_POST['SelectFuncionarioModal'];
     $comentarioUsuarioDerivar= $_POST['txtDistribucionModal'];
-    
-    
+    }
 
+    
+    
+    
     if (!empty($idSolicitud)) {
       
     
         $solicitudModel = new Solicitud($conn);
-        if ($solicitudModel->DerivarSolicitud($idSolicitud, $usuario_idActual,$prioridad, $IdUsuarioDerivar, $comentarioUsuarioDerivar)) {
-            header("Location: /sitio/public/resultado.php?result=OK&msg=OK");
+        if ($solicitudModel->DerivarSolicitud($idSolicitud, $usuario_idActual,$prioridad,$idderivacion,$IdUsuarioDerivar, $comentarioUsuarioDerivar)) {
+            header("Location: /sitio/public/resultado.php?result=OK&msg=Solicidud derivada correctamente");
             exit();
         } else {
             $error_msg = urlencode($conn->error);

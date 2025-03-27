@@ -10,6 +10,8 @@ if (!isset($_SESSION['usuario']) && basename($_SERVER['PHP_SELF']) != 'index.php
     exit();
 }
 
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
 
 //#### Recibir campos por POST
@@ -34,12 +36,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!empty($titulo) && !empty($fecha_solicitud) && !empty($descripcion)) {
        
         $solicitudModel = new Solicitud($conn);
-        if ($solicitudModel->crearSolicitud($usuario_id, $titulo, $fecha_solicitud, $solicitante, $prioridad, $tipo_solicitud, $descripcion, $colaborador, $comentarioColaborador)) {
-            header("Location: /sitio/public/resultado.php?result=OK&msg=OK");
+        $idSolicitud = $solicitudModel->crearSolicitud($usuario_id, $titulo, $fecha_solicitud, $solicitante, $prioridad, $tipo_solicitud, $descripcion, $colaborador, $comentarioColaborador);  
+        if ($idSolicitud){
+            header("Location: /sitio/public/resultado.php?result=OK&msg=<strong>Solicitud $idSolicitud </strong>creada correctamente");
             exit();
         } else {
             $error_msg = urlencode($conn->error);
-            error_log("Error en la inserción de solicitud: " . $conn->error);
+            error_log("Error en la creación de la solicitud: " . $conn->error);
             header("Location: /sitio/public/resultado.php?result=NOK&msg=$error_msg");
             exit();
         }

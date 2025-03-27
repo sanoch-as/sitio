@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Language" content="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Analytics Dashboard - This is an example dashboard created using build-in elements and components.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" />
+    <meta name="description" content="This is an example dashboard created using build-in elements and components.">
+    <meta name="msapplication-tap-highlight" content="no">
+    <!--
+    =========================================================
+    * ArchitectUI HTML Theme Dashboard - v1.0.0
+    =========================================================
+    * Product Page: https://dashboardpack.com
+    * Copyright 2019 DashboardPack (https://dashboardpack.com)
+    * Licensed under MIT (https://github.com/DashboardPack/architectui-html-theme-free/blob/master/LICENSE)
+    =========================================================
+    * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+    -->
+	
+
+
+
+	<script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script> 
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">	
+    
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+	<!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"> -->
+
+ <!--	<link href="http://localhost:8080/sanoch/main.css" rel="stylesheet"> -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+   
+	<script type="text/javascript" src="http:////cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+	<link rel="stylesheet" href="http://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+	
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/js/all.min.js" integrity="sha256-MAgcygDRahs+F/Nk5Vz387whB4kSK9NXlDN3w58LLq0=" crossorigin="anonymous"></script>
+	
+	<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.7.0/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.html5.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.print.min.js "></script>
+   
+
+
+</head>
+<body >
+    <div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">   
+		<div class="panel panel-default">
+			<div class="panel-heading">	
+				<h4 style="color:white; background-color: rgb(79, 79, 85); padding-top: 10px; padding-bottom: 10px; padding-left: 10px;"><strong> <span class="glyphicon glyphicon-file" aria-hidden="true"></span> REPORTE ESTADO CASO</strong></h4>
+				<div class="app-main__outer" style="padding: 5px 15px;">                   
+					<div class="app-main__inner">   					
+						<div class="row">							
+							<div class="col-md-12">
+								<div class="panel panel-primary">
+									<div class="panel-heading">
+										<h3 class="panel-title">Buscar Caso</h3>
+									</div>
+									<div class="panel-body">										
+										<form class="">
+                                            <div class="form-row">
+                                                <div class="col-md-3">
+                                                    <div class="position-relative form-group"><label for="numcaso" class="">N° Caso</label><input name="numcaso" id="numcaso" placeholder="Ingrese N° del Caso" type="number" class="form-control" min="1"></div>
+                                                </div>
+											
+                                                 <div class="col-md-3">
+                                                    <div class="position-relative form-group" >
+														<label for="selectProceso">Estado</label>
+														<select name="selectProceso" id="selectProceso" class="form-control">
+                                                        <option value="all" selected>Todos</option>
+														<option value="TO_DO">Por Hacer</option>
+														<option value="COMPLETED">Cerrado</option>
+														<option value="CANCELLED">Cancelado</option>                                                         
+                                                    </select></div> 
+                                                </div> 
+																						
+                                            
+                                                <div class="col-md-3">
+                                                    <div class="position-relative form-group"><label for="FechaDesde" class="">Fecha Desde</label><input name="FechaDesde" id="FechaDesde" type="date" class="form-control"></div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="position-relative form-group"><label for="FechaHasta" class="">Fecha Hasta</label><input name="FechaHasta" id="FechaHasta" type="date" class="form-control"></div>
+                                                </div>
+                                                
+											</div>	
+											<div class="form-row">
+												<div class="col-md-12"> 
+													<button type="button" onclick="buscar()" class="btn btn-primary btn-sm" style="float:right"><i class="fas fa-search"></i> Buscar</button>
+												</div>
+											</div>										
+                                        </form>
+									</div>
+								</div>								
+							</div>
+						</div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="panel panel-primary">
+                                    <div class="panel-heading">
+										<h3 class="panel-title">Resultados</h3>
+                                    </div>
+									<div class="panel-body">
+										<div class="table-responsive" style=" padding: 10px 10px 10px 10px;">
+											<table class="align-middle mb-0 table table-borderless table-striped table-hover display" width="100%" padding="10px 10px 10px 10px "id="tabladetalle">
+												<thead>
+												<tr>
+													<th class="text-center" width="8%">N° Caso</th>
+													<th class="text-center" width="17%">Fecha Creación</th>
+													<th class="text-center"width="20%">Trámite</th>
+													<th class="text-center"width="10%">RUT Cliente</th>
+													<th class="text-center"width="15%">Cliente</th>
+													<th class="text-center"width="15%">Estado Caso</th>
+													<th class="text-center"width="15%">Fecha Cierre Caso</th>
+													<th class="text-center" hidden >Dirección Cliente</th>
+													<th class="text-center" hidden >Número Dirección</th>
+													<th class="text-center" hidden >Población</th>
+													<th class="text-center" hidden >Observación</th>																									
+												</tr>
+												</thead>
+												<tbody id="FilaTabla2">                                          
+												</tbody>
+											</table>
+                                   		</div>
+									</div>
+	
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+				</div>
+            </div>  	
+        </div>
+    </div>
+<!--<script type="text/javascript" src="http://localhost:8080/sanoch/main.js"></script> -->
+
+<!-- Modal Cargando-->
+<div class="modal fade" id="modalcargando" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+	  <div class="modal-content">
+		<div class="modal-body">
+		  <i class="fas fa-circle-notch fa-spin fa-3x center"></i> Cargando ...
+		</div>
+	  </div>
+	</div>
+</div>
+
+
+
+
+
+<script>
+	
+	$( document ).ready(function() {
+		
+		
+		
+	});
+
+	function buscar(){
+
+
+	 	$("#modalcargando").modal({
+			'show':true,
+			'keyboard':false,
+			'backdrop':"static"
+		});	 
+		
+		var numcaso=$("#numcaso").val();
+		
+		var proceso= $("#selectProceso").children("option:selected").val();
+		//var proceso= 'all';
+		var fechadesde=$("#FechaDesde").val();
+		var fechahasta=$("#FechaHasta").val();
+		var usuario=$("#usuario").val();
+		
+		
+		var table= $('#tabladetalle').DataTable({
+		   "destroy": true,
+		   "ajax": {
+				"type":"GET",
+				"url": 'http://138.121.111.4:81/sysworkflow/es-ES/neoclassic/deleteCases/GetCasosReportes.php?APP_NUMBER='+numcaso+'&FDESDE='+fechadesde+'&FHASTA='+fechahasta+'&PROCESO='+proceso
+		   },     
+			"columns": [
+				{ "data": "APP_NUMBER"},
+				{ "data": "APP_CREATE_DATE"},
+				{ "data": "TRAMITE_LABEL"},
+				{ "data": "RUT_CLIENTE_LABEL"},
+				{ "data": "CLIENTE"},
+				{ "data": "ESTADO"},
+				{ "data": "FECHA_CIERRE_CASO"},
+				{ "data": "DIRECCIONCLIENTE"},
+				{ "data": "NUMERODIRECCIONCLIENTE"},
+				{ "data": "POBLACIONCLIENTE_LABEL"},
+				{ "data": "OBSERVACION"}				
+				
+			],
+			"columnDefs": [				
+				{ targets:[ 7 ], visible: false, searchable: false },
+				{ targets:[ 8 ], visible: false, searchable: false },
+				{ targets:[ 9 ], visible: false, searchable: false },
+				{ targets:[ 10 ], visible: false, searchable: false }
+				
+				
+       		],
+        	fixedColumns: true,
+			"bStateSave": true,
+            "bProcessing": true,
+            "bFilter": true,
+            "bInfo": true,
+            "bPaginate": true,
+            "iDisplayLength": 25,
+            "aLengthMenu": [[25, 50, 75, 100], [25, 50, 75, 100]],
+            "sPaginationType": "full_numbers",
+            "oLanguage": {
+                "sLengthMenu": "Mostrar _MENU_ Casos Consulta",
+                "sEmptyTable": "No existen Casos",
+                "sZeroRecords": "No se encontraron Casos",
+                "sInfo": "Mostrando del _START_ al _END_ de _TOTAL_ Casos",
+                "sInfoEmpty": "0 Casos encontrados",
+                "sInfoFiltered": "(B&uacute;squeda sobre _MAX_ Casos Consulta)",
+                "sSearch": "Buscar:",
+                "sProcessing": "<b>Cargando...</b>",
+                "oPaginate": {
+                    "sFirst": "&laquo;&laquo; Primera",
+                    "sLast": "Última &raquo;&raquo;",
+                    "sNext": "Siguiente &raquo;",
+                    "sPrevious": "&laquo; Anterior"
+                }
+			},
+			dom: 'Bfrtip',
+            buttons: [
+            {
+                extend: 'excelHtml5',
+                title: 'Reporte'
+            },
+        ]	  	  
+		}); 
+
+	 	$("#modalcargando").modal('hide');	
+	};  
+  
+</script>
+
+
+
+
+</body>
+</html>
