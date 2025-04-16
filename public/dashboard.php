@@ -204,7 +204,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
 
                         </div>
                     </div>
-                    <div id="iframe" class="responsive-iframe" style="padding-bottom:20px"><iframe src="graph.php" style="width: 100%; height: 100%; border: none;"></iframe></div>
+                    <div id="iframe" ><iframe src="graph.php" style="width: 100%; height: 100%; border: none;"></iframe></div>
                 </div>
             </div>
 
@@ -238,8 +238,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
                     iframe.src = url;
                     iframe.style.width = "100%";
                     iframe.style.height = "100%";
-                    iframe.style.border = "none";
-                    iframe.style.paddingBottom = "20px";
+                    iframe.style.border = "none";                    
                     iframe.classList.add("responsive-iframe");
                     iframeContainer.appendChild(iframe);
                 });

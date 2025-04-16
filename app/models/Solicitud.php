@@ -40,11 +40,29 @@ class Solicitud
         while ($this->conn->more_results()) {
             $this->conn->next_result();
         }
-       // $query = "SELECT id, usuario_id, titulo, prioridad, tipo_solicitud,estado FROM solicitudes
-       //           WHERE usuario_id='$usuario_id';";
-        $query = "SELECT sol.id, sol.usuario_id, sol.titulo, sol.prioridad, sol.tipo_solicitud, ts.GlosaTipoSolicitud, sol.estado FROM gestion_solicitudes.solicitudes sol, gestion_solicitudes.tiposolicitud ts
+        /*  $query = "SELECT sol.id, sol.usuario_id, sol.titulo, sol.prioridad, sol.tipo_solicitud, ts.GlosaTipoSolicitud, sol.estado FROM gestion_solicitudes.solicitudes sol, gestion_solicitudes.tiposolicitud ts
                 WHERE sol.usuario_id='$usuario_id'
-                AND sol.tipo_solicitud=ts.idTipoSolicitud ORDER BY sol.id ASC;";
+                AND sol.tipo_solicitud=ts.idTipoSolicitud ORDER BY sol.id ASC;"; */
+
+
+            $query = "SELECT sol.id, sol.titulo AS titulo, sol.prioridad, ts.GlosaTipoSolicitud, sol.estado as 'estado'
+                FROM gestion_solicitudes.solicitudes sol
+                JOIN gestion_solicitudes.workflow wf ON sol.id = wf.IdSolicitud
+                JOIN gestion_solicitudes.tiposolicitud ts ON sol.tipo_solicitud = ts.idTipoSolicitud
+                WHERE  wf.IndexTareaVigenteSolicitud = '1'
+                AND  sol.estado != 'completado'";
+                
+                if ($usuario_id != 1) { // Si el usuario no es el administrador (id 1)
+                    $query .= " AND wf.idUsuarioActual = '$usuario_id' ORDER BY sol.id ASC;";
+                } else {
+                    $query .= " ORDER BY sol.id ASC; ";
+                }
+
+
+                
+
+
+       
 
         $result = $this->conn->query($query);
 
@@ -131,6 +149,7 @@ class Solicitud
         $result->free(); 
         return $seguimientos;
     }
+
 
 
 }
