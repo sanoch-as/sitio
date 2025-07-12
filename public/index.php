@@ -10,6 +10,7 @@
 <div class="container">
         <div class="jumbotron text-center">
             <h1>Bienvenido a la Gestión de Solicitudes</h1>
+            <h2>Sistema de gestión de casos</h2>
             <p>Accede a tu cuenta para gestionar solicitudes.</p>
             <a href="login.php" class="btn btn-primary">Iniciar Sesión</a>
         </div>
